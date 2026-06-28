@@ -1,0 +1,8 @@
+.repo/
+*.img
+*.dtb
+.DS_Store
+*.swp
+*~
+sed??????
+.merge_tmp.*

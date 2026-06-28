@@ -1,0 +1,12 @@
+[submodule "kernel-6.1"]
+	path = kernel-6.1
+	url = git@github.com:xmprocat/rk_kernel.git
+	branch = RK3506_6.1
+[submodule "u-boot"]
+	path = u-boot
+	url = git@github.com:xmprocat/rk_uboot.git
+	branch = RK3506_6.1
+[submodule "buildroot"]
+	path = buildroot
+	url = git@github.com:xmprocat/rk_buildroot.git
+	branch = RK3506_6.1
