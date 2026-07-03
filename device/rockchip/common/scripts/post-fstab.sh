@@ -103,6 +103,7 @@ for idx in $(seq 1 "$(rk_extra_part_num)"); do
 	DEV="$(rk_extra_part_dev $idx)"
 	MOUNTPOINT="$(rk_extra_part_mountpoint $idx)"
 	FS_TYPE="$(rk_extra_part_fstype $idx)"
+	MOUNT_OPTS="$(rk_extra_part_options $idx)"
 
 	# No fstab entry for built-in partitions
 	if rk_extra_part_builtin $idx; then
@@ -110,6 +111,10 @@ for idx in $(seq 1 "$(rk_extra_part_num)"); do
 		continue
 	fi
 
-	fixup_device_part "$DEV" "$MOUNTPOINT" "$FS_TYPE" \
-		"$(rk_extra_part_options $idx)"
+	# UBIFS volumes need UBI attach first - do not block boot
+	if [ "$FS_TYPE" = ubifs ] || [ "$FS_TYPE" = ubi ]; then
+		MOUNT_OPTS="${MOUNT_OPTS},nofail,x-systemd.device-timeout=10s"
+	fi
+
+	fixup_device_part "$DEV" "$MOUNTPOINT" "$FS_TYPE" "$MOUNT_OPTS"
 done
